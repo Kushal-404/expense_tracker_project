@@ -1,0 +1,87 @@
+{% extends "tracker/base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<div class="panel-header">
+    <div>
+        <h1>Reports</h1>
+        <p class="panel-sub">Category-wise and monthly breakdowns.</p>
+    </div>
+</div>
+
+{% if has_data %}
+<div class="report-grid">
+    <div class="report-card">
+        <h2>Expense by category</h2>
+        <canvas id="expenseChart" height="220"></canvas>
+    </div>
+    <div class="report-card">
+        <h2>Income by category</h2>
+        <canvas id="incomeChart" height="220"></canvas>
+    </div>
+</div>
+
+<div class="report-card report-card-wide">
+    <h2>Monthly income vs. expense</h2>
+    <canvas id="monthlyChart" height="120"></canvas>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script>
+    const inkColor = '#2A2F36';
+    const gridColor = 'rgba(42,47,54,0.08)';
+
+    new Chart(document.getElementById('expenseChart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ expense_labels|safe }},
+            datasets: [{
+                data: {{ expense_values|safe }},
+                backgroundColor: ['#B5533C', '#C97A5D', '#D9A184', '#E4C1A8', '#8C4030', '#A66A4F', '#6E3323', '#CDA98A', '#7D4A38'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: { legend: { position: 'bottom', labels: { color: inkColor, boxWidth: 12 } } }
+        }
+    });
+
+    new Chart(document.getElementById('incomeChart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ income_labels|safe }},
+            datasets: [{
+                data: {{ income_values|safe }},
+                backgroundColor: ['#2F6F5E', '#4C8F7C', '#6FAE9C', '#96C7B8', '#1F4F42', '#3C7D6A', '#5DA08C'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: { legend: { position: 'bottom', labels: { color: inkColor, boxWidth: 12 } } }
+        }
+    });
+
+    new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: {{ month_labels|safe }},
+            datasets: [
+                { label: 'Income', data: {{ month_income|safe }}, backgroundColor: '#2F6F5E' },
+                { label: 'Expense', data: {{ month_expense|safe }}, backgroundColor: '#B5533C' }
+            ]
+        },
+        options: {
+            scales: {
+                x: { ticks: { color: inkColor }, grid: { color: gridColor } },
+                y: { ticks: { color: inkColor }, grid: { color: gridColor }, beginAtZero: true }
+            },
+            plugins: { legend: { labels: { color: inkColor } } }
+        }
+    });
+</script>
+{% else %}
+<div class="empty-state">
+    <p>No transactions yet, so there's nothing to report on.</p>
+    <a href="{% url 'transaction_add' %}" class="btn btn-primary">Record your first transaction</a>
+</div>
+{% endif %}
+{% endblock %}

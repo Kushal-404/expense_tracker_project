@@ -1,0 +1,424 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+    --ink: #1B2430;
+    --ink-soft: #4A5568;
+    --paper: #F3F4F0;
+    --paper-raised: #FFFFFF;
+    --line: #DCDCD2;
+    --gold: #B8912E;
+    --income: #2F6F5E;
+    --income-soft: #E6EFEC;
+    --expense: #B5533C;
+    --expense-soft: #F5E7E2;
+    --radius: 3px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 4px;
+}
+
+h1 { font-size: 1.6rem; }
+h2 { font-size: 1.1rem; margin-bottom: 12px; }
+
+a { color: var(--income); }
+
+/* ---------- App shell ---------- */
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--ink);
+    color: #E8E6DF;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 36px;
+}
+
+.brand-mark {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+}
+
+.brand-name {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+}
+
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex-grow: 1;
+}
+
+.side-nav a {
+    color: #C7C5BC;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+    border-left: 2px solid transparent;
+}
+
+.side-nav a:hover {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+}
+
+.side-nav a.active {
+    background: rgba(184,145,46,0.12);
+    color: var(--gold);
+    border-left: 2px solid var(--gold);
+}
+
+.side-footer {
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-top: 16px;
+    margin-top: 16px;
+}
+
+.side-user {
+    font-size: 0.82rem;
+    color: #9C9A92;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.side-user strong { color: #E8E6DF; }
+
+.link-btn {
+    background: none;
+    border: none;
+    color: #C7C5BC;
+    font-size: 0.88rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+}
+
+.link-btn:hover { color: var(--gold); }
+
+.main-panel {
+    flex-grow: 1;
+    padding: 40px 48px;
+    max-width: 980px;
+}
+
+/* ---------- Auth pages ---------- */
+
+.auth-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    padding: 20px;
+}
+
+.auth-card {
+    background: var(--paper-raised);
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 380px;
+    border-radius: var(--radius);
+}
+
+.auth-mark {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 6px;
+}
+
+.auth-sub {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin: 4px 0 24px;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    text-align: center;
+}
+
+/* ---------- Forms ---------- */
+
+.stacked-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.stacked-form label {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin: 14px 0 5px;
+    font-weight: 500;
+}
+
+.stacked-form label:first-of-type { margin-top: 0; }
+
+.form-control, .stacked-form input, .stacked-form select, .stacked-form textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.94rem;
+    background: var(--paper-raised);
+    color: var(--ink);
+}
+
+.form-control:focus, .stacked-form input:focus, .stacked-form select:focus {
+    outline: none;
+    border-color: var(--income);
+}
+
+.form-narrow { max-width: 440px; }
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.field-error {
+    color: var(--expense);
+    font-size: 0.82rem;
+    margin: 4px 0 0;
+}
+
+.field-help {
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    margin: 3px 0 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: var(--ink);
+    color: #fff;
+}
+
+.btn-primary:hover { background: #2C3646; }
+
+.btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border-color: var(--line);
+}
+
+.btn-danger {
+    background: var(--expense);
+    color: #fff;
+}
+
+.btn-block { width: 100%; text-align: center; margin-top: 20px; }
+
+/* ---------- Panel header ---------- */
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+}
+
+.panel-header-tight { margin-bottom: 14px; margin-top: 36px; }
+
+.panel-sub {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ---------- Stat cards ---------- */
+
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.stat-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    border-top: 3px solid var(--ink);
+}
+
+.stat-income { border-top-color: var(--income); }
+.stat-expense { border-top-color: var(--expense); }
+.stat-balance { border-top-color: var(--gold); }
+
+.stat-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* ---------- Ledger table ---------- */
+
+.ledger {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper-raised);
+}
+
+.ledger th {
+    text-align: left;
+    font-size: 0.76rem;
+    color: var(--ink-soft);
+    font-weight: 500;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ink);
+}
+
+.ledger td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.9rem;
+}
+
+.ledger tbody tr:hover { background: rgba(0,0,0,0.02); }
+
+.align-right { text-align: right; }
+
+.muted { color: var(--ink-soft); }
+
+.amount-income {
+    color: var(--income);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.amount-expense {
+    color: var(--expense);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.text-link {
+    font-size: 0.82rem;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.text-link-danger { color: var(--expense); }
+
+/* ---------- Empty state ---------- */
+
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    background: var(--paper-raised);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius);
+    color: var(--ink-soft);
+}
+
+.empty-state p { margin-bottom: 16px; }
+
+/* ---------- Confirm card ---------- */
+
+.confirm-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    max-width: 480px;
+}
+
+/* ---------- Reports ---------- */
+
+.report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.report-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+}
+
+.report-card-wide { grid-column: 1 / -1; }
+
+/* ---------- Messages ---------- */
+
+.messages { margin-bottom: 18px; }
+
+.flash {
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    font-size: 0.86rem;
+    margin-bottom: 8px;
+}
+
+.flash-success { background: var(--income-soft); color: var(--income); }
+.flash-error, .flash-danger { background: var(--expense-soft); color: var(--expense); }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 780px) {
+    .app-shell { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; align-items: center; padding: 14px 20px; }
+    .side-nav { flex-direction: row; flex-grow: 0; }
+    .side-footer { display: none; }
+    .main-panel { padding: 24px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .report-grid { grid-template-columns: 1fr; }
+}

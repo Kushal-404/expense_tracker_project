@@ -1,0 +1,21 @@
+{% extends "tracker/base.html" %}
+{% block title %}Log in{% endblock %}
+{% block auth_content %}
+<div class="auth-card">
+    <div class="auth-mark">&#8358;</div>
+    <h1>Ledger</h1>
+    <p class="auth-sub">Track what comes in, and what goes out.</p>
+    <form method="post" class="stacked-form">
+        {% csrf_token %}
+        <label for="id_username">Username</label>
+        <input type="text" name="username" id="id_username" class="form-control" required autofocus>
+        <label for="id_password">Password</label>
+        <input type="password" name="password" id="id_password" class="form-control" required>
+        {% if form.errors %}
+        <p class="field-error">Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+    </form>
+    <p class="auth-switch">New here? <a href="{% url 'register' %}">Create an account</a></p>
+</div>
+{% endblock %}

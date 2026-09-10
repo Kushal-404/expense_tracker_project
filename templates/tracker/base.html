@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ledger{% endblock %} · Personal Expenses Tracker</title>
+    <link rel="stylesheet" href="{% static 'tracker/css/style.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-mark">&#8358;</span>
+                <span class="brand-name">Ledger</span>
+            </div>
+            <nav class="side-nav">
+                <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Summary</a>
+                <a href="{% url 'transaction_list' %}" class="{% if request.resolver_match.url_name == 'transaction_list' %}active{% endif %}">Transactions</a>
+                <a href="{% url 'transaction_add' %}" class="{% if request.resolver_match.url_name == 'transaction_add' %}active{% endif %}">Add entry</a>
+                <a href="{% url 'reports' %}" class="{% if request.resolver_match.url_name == 'reports' %}active{% endif %}">Reports</a>
+            </nav>
+            <div class="side-footer">
+                <div class="side-user">Signed in as<br><strong>{{ user.username }}</strong></div>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="link-btn">Log out</button>
+                </form>
+            </div>
+        </aside>
+        <main class="main-panel">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="flash flash-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    {% else %}
+    <div class="auth-shell">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="flash flash-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block auth_content %}{% endblock %}
+    </div>
+    {% endif %}
+</body>
+</html>

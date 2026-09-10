@@ -1,0 +1,66 @@
+{% extends "tracker/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="panel-header">
+    <div>
+        <h1>{{ title }}</h1>
+        <p class="panel-sub">Record what came in or what went out.</p>
+    </div>
+</div>
+
+<form method="post" class="stacked-form form-narrow" id="transaction-form">
+    {% csrf_token %}
+
+    <label for="id_type">Type</label>
+    {{ form.type }}
+
+    <label for="id_category">Category</label>
+    {{ form.category }}
+
+    <label for="id_amount">Amount</label>
+    {{ form.amount }}
+
+    <label for="id_date">Date</label>
+    {{ form.date }}
+
+    <label for="id_description">Description</label>
+    {{ form.description }}
+
+    {% for field in form %}
+        {% for error in field.errors %}<p class="field-error">{{ field.label }}: {{ error }}</p>{% endfor %}
+    {% endfor %}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save entry</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+</form>
+
+<script>
+    const INCOME_CATEGORIES = {{ income_categories|safe }};
+    const EXPENSE_CATEGORIES = {{ expense_categories|safe }};
+    const typeSelect = document.getElementById('id_type');
+    const categorySelect = document.getElementById('id_category');
+    const currentCategory = "{{ form.instance.category|default:'' }}";
+
+    function refreshCategories(preserveSelection) {
+        const list = typeSelect.value === 'income' ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+        const previous = preserveSelection ? categorySelect.value : null;
+        categorySelect.innerHTML = '';
+        list.forEach(function(pair) {
+            const opt = document.createElement('option');
+            opt.value = pair[0];
+            opt.textContent = pair[1];
+            categorySelect.appendChild(opt);
+        });
+        if (previous && list.some(function(p) { return p[0] === previous; })) {
+            categorySelect.value = previous;
+        } else if (currentCategory && list.some(function(p) { return p[0] === currentCategory; })) {
+            categorySelect.value = currentCategory;
+        }
+    }
+
+    typeSelect.addEventListener('change', function() { refreshCategories(false); });
+    refreshCategories(true);
+</script>
+{% endblock %}

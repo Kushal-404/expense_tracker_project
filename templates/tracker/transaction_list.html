@@ -1,0 +1,48 @@
+{% extends "tracker/base.html" %}
+{% block title %}Transactions{% endblock %}
+{% block content %}
+<div class="panel-header">
+    <div>
+        <h1>All transactions</h1>
+        <p class="panel-sub">{{ transactions|length }} entr{{ transactions|length|pluralize:"y,ies" }} on record.</p>
+    </div>
+    <a href="{% url 'transaction_add' %}" class="btn btn-primary">Add entry</a>
+</div>
+
+{% if transactions %}
+<table class="ledger">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th class="align-right">Amount</th>
+            <th class="align-right">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in transactions %}
+        <tr>
+            <td>{{ t.date|date:"d M Y" }}</td>
+            <td>{{ t.get_type_display }}</td>
+            <td>{{ t.category_label }}</td>
+            <td class="muted">{{ t.description|default:"—" }}</td>
+            <td class="align-right {% if t.type == 'income' %}amount-income{% else %}amount-expense{% endif %}">
+                {% if t.type == 'income' %}+{% else %}-{% endif %}{{ t.amount|floatformat:2 }}
+            </td>
+            <td class="align-right">
+                <a href="{% url 'transaction_edit' t.pk %}" class="text-link">Edit</a>
+                <a href="{% url 'transaction_delete' t.pk %}" class="text-link text-link-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+    <p>No entries yet.</p>
+    <a href="{% url 'transaction_add' %}" class="btn btn-primary">Record your first transaction</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "tracker/base.html" %}
+{% block title %}Delete entry{% endblock %}
+{% block content %}
+<div class="panel-header">
+    <div>
+        <h1>Delete entry</h1>
+        <p class="panel-sub">This can't be undone.</p>
+    </div>
+</div>
+
+<div class="confirm-card">
+    <p>
+        Remove the {{ transaction.get_type_display|lower }} of
+        <strong>{{ transaction.amount }}</strong> in
+        <strong>{{ transaction.category_label }}</strong>
+        dated {{ transaction.date|date:"d M Y" }}?
+    </p>
+    <form method="post" class="form-actions">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-ghost">Cancel</a>
+    </form>
+</div>
+{% endblock %}
