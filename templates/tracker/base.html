@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Ledger{% endblock %} · Personal Expenses Tracker</title>
+    <title>{% block title %}Personal Expense Tracker{% endblock %} · Personal Expense Tracker</title>
     <link rel="stylesheet" href="{% static 'tracker/css/style.css' %}">
 </head>
 <body>
@@ -13,7 +13,7 @@
         <aside class="sidebar">
             <div class="brand">
                 <span class="brand-mark">&#8358;</span>
-                <span class="brand-name">Ledger</span>
+                <span class="brand-name">Personal Expense Tracker</span>
             </div>
             <nav class="side-nav">
                 <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Summary</a>

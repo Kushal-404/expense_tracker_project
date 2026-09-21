@@ -69,7 +69,8 @@ a { color: var(--income); }
 
 .brand-name {
     font-family: 'Roboto Slab', serif;
-    font-size: 1.15rem;
+    font-size: 0.92rem;
+    line-height: 1.2;
     letter-spacing: 0.01em;
 }
 
